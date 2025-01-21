@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import Toolbar, { FilterFieldProps, ToolbarProps } from './toolbar';
+import Toolbar, { ToolbarProps } from './toolbar';
 import { usePathname } from 'next/navigation';
-import { parseAsJson, useQueryState } from 'nuqs';
+import { useQueryState } from 'nuqs';
 import { revalidatePathClient } from '@/lib/revalidate-client';
+import { parseFilters } from './parser';
+import { FilterFieldProps } from './types';
 
 interface ToolbarServerWrapperProps {
   schema: ToolbarProps['schema'];
@@ -13,16 +15,23 @@ interface ToolbarServerWrapperProps {
 export const ToolbarServerWrapper: React.FC<ToolbarServerWrapperProps> = ({
   schema,
 }) => {
-  const [filters, setFilters] = useQueryState<FilterFieldProps[]>(
+  // const [filters, setFilters] = useState<FilterFieldProps[]>([]);
+  const [filters, setFilters] = useQueryState(
     'filters',
-    parseAsJson<FilterFieldProps[]>(
-      (value) => value as FilterFieldProps[],
-    ).withDefault([]),
+    parseFilters(schema).withDefault([]),
   );
   const pathname = usePathname();
+
   const onFilterChange = async (filters: FilterFieldProps[]) => {
     await setFilters(filters);
     revalidatePathClient(pathname);
   };
-  return <Toolbar schema={schema} onFilterChange={onFilterChange} />;
+
+  return (
+    <Toolbar
+      schema={schema}
+      onFilterChange={onFilterChange}
+      defaultFilters={filters}
+    />
+  );
 };

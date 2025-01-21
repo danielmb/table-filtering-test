@@ -8,25 +8,42 @@ import {
 // to create unique ids for filters clientside, do not use uuid module use crypto
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import { Delete } from 'lucide-react';
+import { FilterFieldProps } from './types';
+import {
+  BooleanInput,
+  DateInput,
+  InputDefaultProps,
+  NumberInput,
+  StringInput,
+} from './toolbar-inputs';
+import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover';
+import { FilterIcon, ListFilter, TrashIcon } from 'lucide-react';
+import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
-export interface FilterFieldProps {
-  id: string;
-  schema: keyof FieldSchema;
-  field: string;
-  value?: string | number;
-  operator?: Operator;
-  disabled?: boolean;
-}
 // const Toolbar = (schema: FieldSchema) => {
 type OnfilterChangeFn = (filters: FilterFieldProps[]) => void;
 export interface ToolbarProps {
   schema: FieldSchema;
   onFilterChange?: OnfilterChangeFn;
+  defaultFilters?: FilterFieldProps[];
 }
-const Toolbar: React.FC<ToolbarProps> = ({ schema, onFilterChange }) => {
-  const [filters, setFilters] = useState<FilterFieldProps[]>([]);
+
+const Toolbar: React.FC<ToolbarProps> = ({
+  schema,
+  onFilterChange,
+  defaultFilters,
+}) => {
+  const [filters, setFilters] = useState<FilterFieldProps[]>(
+    defaultFilters ?? [],
+  );
   const [selectedField, setSelectedField] = useState<keyof FieldSchema>();
   const addFilter = () => {
     if (!selectedField) {
@@ -73,137 +90,134 @@ const Toolbar: React.FC<ToolbarProps> = ({ schema, onFilterChange }) => {
       filters.map((f) => (f.id === id ? { ...f, disabled: !f.disabled } : f)),
     );
   };
+
   return (
     <div>
       <div>
-        {/* Add */}
-        <select
-          value={selectedField}
-          onChange={(e) =>
-            setSelectedField(e.target.value as keyof FieldSchema)
-          }
-        >
-          {Object.keys(schema).map((key) => (
-            <option key={key} value={key}>
-              {key}
-            </option>
-          ))}
-        </select>
-        <button onClick={addFilter}>Add</button>
-      </div>
-      <div>
-        <h2>Filters</h2>
-        <ul>
-          {filters.map((filter) => {
-            const field = schema[filter.schema];
-            const operators =
-              field.allowedOperators ?? getDefaultOperators(field.type);
-            if (!field) {
-              return null;
-            }
-            // these should be in a separate component, i'm just lazy
-            // also missing a few operators
-            if (field.type === 'string') {
-              return (
-                // <li key={filter.id} className="flex flex-row space-x-2">
-                <li
-                  key={filter.id}
-                  className={cn('flex flex-row space-x-2', {
-                    'opacity-50': filter.disabled,
-                  })}
-                >
-                  <p>{filter.field}</p>
-                  <select
-                    value={filter.operator}
-                    onChange={(e) => {
-                      const newFilters = filters.map((f) =>
-                        f.id === filter.id
-                          ? { ...f, operator: e.target.value as Operator }
-                          : f,
-                      );
-                      setFilters(newFilters);
-                    }}
-                  >
-                    {operators.map((operator) => (
-                      <option key={operator} value={operator}>
-                        {operator}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    value={filter.value}
-                    onChange={(e) => {
-                      const newFilters = filters.map((f) =>
-                        f.id === filter.id
-                          ? { ...f, value: e.target.value }
-                          : f,
-                      );
-                      setFilters(newFilters);
-                    }}
-                  />
-                  <Button onClick={() => toggleEnabled(filter.id)}>
-                    {filter.disabled ? 'Enable' : 'Disable'}
-                  </Button>
-                  <Button onClick={() => removeFilter(filter.id)}>
-                    <Delete />
-                  </Button>
-                </li>
-              );
-            }
-            if (field.type === 'number') {
-              return (
-                <li
-                  key={filter.id}
-                  className={cn('flex flex-row space-x-2', {
-                    'opacity-50': filter.disabled,
-                  })}
-                >
-                  <p>{filter.field}</p>
-                  <select
-                    value={filter.operator}
-                    onChange={(e) => {
-                      const newFilters = filters.map((f) =>
-                        f.id === filter.id
-                          ? { ...f, operator: e.target.value as Operator }
-                          : f,
-                      );
-                      setFilters(newFilters);
-                    }}
-                  >
-                    {operators.map((operator) => (
-                      <option key={operator} value={operator}>
-                        {operator}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="number"
-                    value={filter.value}
-                    onChange={(e) => {
-                      const newFilters = filters.map((f) =>
-                        f.id === filter.id
-                          ? { ...f, value: parseFloat(e.target.value) }
-                          : f,
-                      );
-                      setFilters(newFilters);
-                    }}
-                  />
-                  <Button onClick={() => toggleEnabled(filter.id)}>
-                    {filter.disabled ? 'Enable' : 'Disable'}
-                  </Button>
-                  <Button onClick={() => removeFilter(filter.id)}>
-                    <Delete />
-                  </Button>
-                </li>
-              );
-            }
-            return (
-              <Button key={filter.id} onClick={() => removeFilter(filter.id)}>
-                Unknown field type
-              </Button>
-            );
-          })}
-        </ul>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm">
+              <ListFilter className="size-3" />
+              Filters
+              {filters.length > 0 && (
+                <Badge variant="secondary">{filters.length}</Badge>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            align="start"
+            collisionPadding={10}
+            className={cn(
+              'flex w-[calc(100vw-theme(spacing.12))] min-w-60 origin-[var(--radix-popover-content-transform-origin)] flex-col p-4 sm:w-[36rem]',
+              filters.length > 0 ? 'gap-3.5' : 'gap-2',
+            )}
+          >
+            <div>
+              {filters.map((filter, i) => {
+                const field = schema[filter.schema];
+                const operators =
+                  field.allowedOperators ?? getDefaultOperators(field.type);
+
+                if (!field) {
+                  return null;
+                }
+                const defaultInput = {
+                  filter,
+                  operators,
+                  setFilters,
+                  filters,
+                  toggleEnabled,
+                  removeFilter,
+                } satisfies InputDefaultProps;
+
+                return (
+                  <div className="flex items-center space-x-2" key={filter.id}>
+                    <div>
+                      <span className="text-sm font-bold">
+                        {i === 0 ? 'Where' : 'And'}
+                      </span>
+                    </div>
+
+                    <div>
+                      <Select
+                        value={filter.field}
+                        onValueChange={(value) => {
+                          setFilters(
+                            filters.map((f) =>
+                              f.id === filter.id ? { ...f, field: value } : f,
+                            ),
+                          );
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder={filter.field}>
+                            {filter.field}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.keys(schema).map((key) => (
+                            <SelectItem key={key} value={key}>
+                              {schema[key].label ?? key}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Select
+                        value={filter.operator}
+                        onValueChange={(value) => {
+                          setFilters(
+                            filters.map((f) =>
+                              f.id === filter.id
+                                ? { ...f, operator: value as Operator }
+                                : f,
+                            ),
+                          );
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder={filter.operator}>
+                            {filter.operator}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {operators.map((operator) => (
+                            <SelectItem key={operator} value={operator}>
+                              {operator}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      {field.type === 'string' && (
+                        <StringInput key={filter.id} {...defaultInput} />
+                      )}
+                      {field.type === 'number' && (
+                        <NumberInput key={filter.id} {...defaultInput} />
+                      )}
+                      {field.type === 'boolean' && (
+                        <BooleanInput key={filter.id} {...defaultInput} />
+                      )}
+                      {field.type === 'date' && (
+                        <DateInput key={filter.id} {...defaultInput} />
+                      )}
+                    </div>
+                    <div>
+                      <Button onClick={() => removeFilter(filter.id)}>
+                        <TrashIcon className="size-3" />
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-start">
+              <Button onClick={addFilter}>Add Filter</Button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );

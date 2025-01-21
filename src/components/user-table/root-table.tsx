@@ -1,24 +1,25 @@
 import React from 'react';
 import { getUsers } from './server';
 import CreateUserButton from './components/create-user-button';
-import SetRandomSalaryButton from './components/set-salary';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+// import SetRandomSalaryButton from './components/set-salary';
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableFooter,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from '@/components/ui/table';
 import { Filter, validateFilters } from '@/lib/filters';
 import { getUsersSchema } from './get-users-schema';
 import { ToolbarServerWrapper } from '../table/toolbar-server-wrapper';
+import UserTable from './data-table';
 interface UsersTableProps {
   filters: Filter[];
 }
-const UsersTable: React.FC<UsersTableProps> = async ({ filters }) => {
+const UsersRootTable: React.FC<UsersTableProps> = async ({ filters }) => {
   // const filters = [
   //   // {
   //   //   field: 'name',
@@ -53,7 +54,8 @@ const UsersTable: React.FC<UsersTableProps> = async ({ filters }) => {
     <>
       {error && <div>{error.message}</div>}
       <ToolbarServerWrapper schema={getUsersSchema} />
-      <Table>
+      <UserTable data={users} />
+      {/* <Table>
         <TableCaption>Users</TableCaption>
         <TableHeader>
           <TableRow>
@@ -82,10 +84,10 @@ const UsersTable: React.FC<UsersTableProps> = async ({ filters }) => {
             <TableCell colSpan={3}>Total: {users.length}</TableCell>
           </TableRow>
         </TableFooter>
-      </Table>
+      </Table> */}
       <CreateUserButton />
     </>
   );
 };
 
-export default UsersTable;
+export default UsersRootTable;

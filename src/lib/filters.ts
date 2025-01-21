@@ -12,6 +12,7 @@ export interface Filter {
   field: string;
   operator: Operator;
   value: unknown;
+  disabled?: boolean;
 }
 export type FieldType = 'string' | 'number' | 'boolean' | 'date';
 
@@ -25,6 +26,7 @@ type SchemaField = {
   type: FieldType;
   allowedOperators?: Operator[];
   notNullable?: boolean;
+  label?: string;
 };
 export type FieldSchema = Record<string, SchemaField>;
 const getValue = (value: unknown, schemaField?: SchemaField) => {
