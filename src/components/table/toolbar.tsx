@@ -44,11 +44,11 @@ const Toolbar: React.FC<ToolbarProps> = ({
   const [filters, setFilters] = useState<FilterFieldProps[]>(
     defaultFilters ?? [],
   );
-  const [selectedField, setSelectedField] = useState<keyof FieldSchema>();
   const addFilter = () => {
-    if (!selectedField) {
-      return;
-    }
+    // if (!selectedField) {
+    //   return;
+    // }
+    const selectedField = Object.keys(schema)[0];
     const field = schema[selectedField];
     const defaultOperators = getDefaultOperators(field.type);
     const defualtOperator = field.allowedOperators
@@ -66,7 +66,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
       ...filters,
       {
         id: crypto.randomUUID(),
-        schema: selectedField,
         field: selectedField,
         operator: defualtOperator,
         value: defaultValue,
@@ -114,10 +113,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
           >
             <div>
               {filters.map((filter, i) => {
-                const field = schema[filter.schema];
+                const field = schema[filter.field];
                 const operators =
                   field.allowedOperators ?? getDefaultOperators(field.type);
-
                 if (!field) {
                   return null;
                 }
@@ -142,10 +140,54 @@ const Toolbar: React.FC<ToolbarProps> = ({
                       <Select
                         value={filter.field}
                         onValueChange={(value) => {
+                          // make sure the operator is valid for the new field
+                          const newField = schema[value];
+                          if (!newField) {
+                            return;
+                          }
+                          const allowedOperators =
+                            newField.allowedOperators ||
+                            getDefaultOperators(newField.type);
+
+                          // if (
+                          //   !filter.operator ||
+                          //   !allowedOperators.includes(filter.operator)
+                          // ) {
+                          //   setFilters(
+                          //     filters.map((f) =>
+                          //       f.id === filter.id
+                          //         ? {
+                          //             ...f,
+                          //             operator: allowedOperators[0],
+                          //             value: '',
+                          //           }
+                          //         : f,
+                          //     ),
+                          //   );
+                          // }
+                          const fieldType = schema[value].type;
                           setFilters(
-                            filters.map((f) =>
-                              f.id === filter.id ? { ...f, field: value } : f,
-                            ),
+                            filters.map((f) => {
+                              // if different field, return the value
+                              if (f.id !== filter.id) {
+                                return f;
+                              }
+                              const newField = schema[value];
+                              const newSchema = schema[f.field];
+                              return {
+                                ...f,
+                                field: value,
+                                operator:
+                                  !f.operator ||
+                                  allowedOperators.includes(f.operator)
+                                    ? f.operator
+                                    : allowedOperators[0],
+                                value:
+                                  fieldType !== newSchema.type
+                                    ? undefined
+                                    : f.value,
+                              };
+                            }),
                           );
                         }}
                       >

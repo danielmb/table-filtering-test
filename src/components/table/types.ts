@@ -1,10 +1,9 @@
-import { FieldSchema, Operator } from '@/lib/filters';
+import { Operator } from '@/lib/filters';
 
 export interface FilterFieldProps {
   id: string;
-  schema: keyof FieldSchema;
   field: string;
-  value?: string | number;
+  value?: string | number | null;
   operator?: Operator;
   disabled?: boolean;
 }
