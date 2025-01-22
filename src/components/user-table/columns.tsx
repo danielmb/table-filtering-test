@@ -1,7 +1,10 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { TData } from './data-table';
 import SetRandomSalaryButton from './components/set-salary';
+import { createSelectColumn } from '../table/table-select-column';
 export const columns = [
+  createSelectColumn({ id: 'select' }),
+
   {
     header: 'ID',
     accessorKey: 'id',

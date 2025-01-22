@@ -1,20 +1,17 @@
 'use client';
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Delete } from 'lucide-react';
 import { Operator } from '@/lib/filters';
 import { FilterFieldProps } from './types';
-import { cn } from '@/lib/utils';
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+
 import { Input } from '../ui/input';
 export interface InputDefaultProps {
   filter: FilterFieldProps;
@@ -26,82 +23,14 @@ export interface InputDefaultProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ActionsProps extends InputDefaultProps {}
-const Actions: React.FC<ActionsProps> = ({
-  filter,
-  filters,
-  setFilters,
-  toggleEnabled,
-  removeFilter,
-}) => (
-  <>
-    <Button onClick={() => toggleEnabled(filter.id)}>
-      {filter.disabled ? 'Enable' : 'Disable'}
-    </Button>
-    <Button onClick={() => removeFilter(filter.id)}>
-      <Delete />
-    </Button>
-    {
-      // only show this button if the filter is not already null, and
-      // if operator: 'is' or 'not' is selected
-    }
-    {filter.value !== null && ['is', 'not'].includes(filter.operator ?? '') && (
-      <Button
-        onClick={() => {
-          const newFilters = filters.map((f) =>
-            f.id === filter.id ? { ...f, value: null } : f,
-          );
-          setFilters(newFilters as FilterFieldProps[]);
-        }}
-      >
-        Set to Null
-      </Button>
-    )}
-  </>
-);
-const OperatorSelect: React.FC<InputDefaultProps> = ({
-  filter,
-  operators,
-  setFilters,
-  filters,
-}) => (
-  <Select
-    value={filter.operator}
-    onValueChange={(value) => {
-      const newFilters = filters.map((f) =>
-        f.id === filter.id ? { ...f, operator: value as Operator } : f,
-      );
-      setFilters(newFilters);
-    }}
-  >
-    {/* {operators.map((operator) => (
-      <option key={operator} value={operator}>
-        {operator}
-      </option>
-    ))} */}
-    <SelectTrigger>
-      <SelectValue />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        {operators.map((operator) => (
-          <SelectItem key={operator} value={operator}>
-            <SelectLabel>{operator}</SelectLabel>
-          </SelectItem>
-        ))}
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-);
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface NumberInputProps extends InputDefaultProps {}
 export const NumberInput: React.FC<NumberInputProps> = ({
   filter,
-  operators,
+  // operators,
   setFilters,
   filters,
-  toggleEnabled,
-  removeFilter,
+  // toggleEnabled,
+  // removeFilter,
 }) => {
   return (
     // <li
@@ -270,7 +199,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   return (
     <Input
       type="date"
-      value={filter.value}
+      value={filter.value ?? ''}
       onChange={(e) => {
         const newFilters = filters.map((f) =>
           f.id === filter.id ? { ...f, value: e.target.value } : f,

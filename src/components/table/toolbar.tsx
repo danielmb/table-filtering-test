@@ -17,7 +17,7 @@ import {
   StringInput,
 } from './toolbar-inputs';
 import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover';
-import { FilterIcon, ListFilter, TrashIcon } from 'lucide-react';
+import { ListFilter, TrashIcon } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
 import {
@@ -172,7 +172,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
                               if (f.id !== filter.id) {
                                 return f;
                               }
-                              const newField = schema[value];
+                              // const newField = schema[value];
                               const newSchema = schema[f.field];
                               return {
                                 ...f,
