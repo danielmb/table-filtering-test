@@ -25,12 +25,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const now = new Date();
+  const themes = ['light', 'dark', 'high-contrast', 'dracula'];
+  const isHalloween = now.getMonth() === 9 && now.getDate() === 31;
+  if (isHalloween) {
+    themes.push('halloween');
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
+          themes={themes}
           attribute="class"
           defaultTheme="system"
           enableSystem

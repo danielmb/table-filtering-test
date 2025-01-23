@@ -59,6 +59,112 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  /* [data-theme='halloween'] { */
+  .halloween {
+    --background: 20 80% 10%; /* Dark pumpkin orange/brown */
+    --foreground: 40 100% 90%; /* Bright orange/cream */
+    --card: 20 70% 8%; /* Very dark pumpkin brown */
+    --card-foreground: 40 100% 90%;
+    --popover: 20 70% 8%;
+    --popover-foreground: 40 100% 90%;
+    --primary: 340 80% 40%; /* Deep blood red */
+    --primary-foreground: 40 100% 90%;
+    --secondary: 280 50% 30%; /* Dark purple */
+    --secondary-foreground: 40 100% 90%;
+    --muted: 280 30% 20%;
+    --muted-foreground: 40 70% 70%;
+    --accent: 20 60% 20%; /* Dark burnt orange */
+    --accent-foreground: 40 100% 90%;
+    --destructive: 0 70% 40%; /* Darker blood red */
+    --destructive-foreground: 40 100% 90%;
+    --border: 20 50% 15%;
+    --input: 20 50% 15%;
+    --ring: 340 60% 50%;
+    --chart-1: 20 80% 50%; /* Pumpkin orange */
+    --chart-2: 340 80% 45%; /* Blood red */
+    --chart-3: 280 60% 40%; /* Dark purple */
+    --chart-4: 40 100% 60%; /* Bright orange/yellow */
+    --chart-5: 0 70% 30%; /* Deep dark red */
+  }
+  .halloween {
+    --background: 0 0% 5%; /* Almost black */
+    --foreground: 40 100% 95%; /* Bright orange/cream */
+    --card: 0 0% 10%; /* Deep black */
+    --card-foreground: 40 100% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 40 100% 95%;
+    --primary: 340 100% 50%; /* Bright blood red */
+    --primary-foreground: 40 100% 95%;
+    --secondary: 280 100% 50%; /* Vivid purple */
+    --secondary-foreground: 40 100% 95%;
+    --muted: 280 70% 20%;
+    --muted-foreground: 40 100% 80%;
+    --accent: 20 100% 40%; /* Intense burnt orange */
+    --accent-foreground: 40 100% 95%;
+    --destructive: 0 100% 50%; /* Extreme blood red */
+    --destructive-foreground: 40 100% 95%;
+    --border: 40 100% 50%;
+    --input: 40 100% 50%;
+    --ring: 340 100% 60%;
+    --chart-1: 20 100% 60%; /* Bright pumpkin orange */
+    --chart-2: 340 100% 55%; /* Intense blood red */
+    --chart-3: 280 100% 50%; /* Maximum purple */
+    --chart-4: 40 100% 70%; /* Bright yellow-orange */
+    --chart-5: 0 100% 40%; /* Deep dark red */
+  }
+  .high-contrast {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 60 100% 50%; /* Bright yellow for high visibility */
+    --primary-foreground: 0 0% 9%;
+    --secondary: 210 100% 56%; /* Bright blue for contrast */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 20%; /* Slightly lighter dark background */
+    --muted-foreground: 0 0% 80%; /* More prominent muted text */
+    --accent: 120 100% 40%; /* Bright green for accent */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 100% 50%; /* Bright, pure red */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 30%; /* More visible border */
+    --input: 0 0% 30%;
+    --ring: 0 0% 90%; /* Brighter ring */
+    --chart-1: 30 100% 50%; /* Bright orange */
+    --chart-2: 160 100% 40%; /* Saturated teal */
+    --chart-3: 280 100% 50%; /* Bright purple */
+    --chart-4: 210 100% 50%; /* Bright blue */
+    --chart-5: 0 100% 50%; /* Bright red */
+  }
+
+  .dracula {
+    --background: 231 15% 18%; /* Dark background */
+    --foreground: 60 30% 96%; /* Light foreground */
+    --card: 231 15% 18%;
+    --card-foreground: 60 30% 96%;
+    --popover: 231 15% 18%;
+    --popover-foreground: 60 30% 96%;
+    --primary: 265 89% 71%; /* Dracula purple */
+    --primary-foreground: 60 30% 96%;
+    --secondary: 191 97% 77%; /* Cyan */
+    --secondary-foreground: 231 15% 18%;
+    --muted: 231 15% 28%;
+    --muted-foreground: 225 27% 51%;
+    --accent: 135 94% 65%; /* Green */
+    --accent-foreground: 231 15% 18%;
+    --destructive: 0 100% 67%; /* Bright red */
+    --destructive-foreground: 60 30% 96%;
+    --border: 225 14% 36%;
+    --input: 225 14% 36%;
+    --ring: 265 89% 71%;
+    --chart-1: 265 89% 71%; /* Purple */
+    --chart-2: 191 97% 77%; /* Cyan */
+    --chart-3: 135 94% 65%; /* Green */
+    --chart-4: 0 100% 67%; /* Red */
+    --chart-5: 32 97% 56%; /* Orange */
+  }
 }
 
 @layer base {

@@ -13,8 +13,8 @@ import React from 'react';
 /**
  * Capitalize the first letter of a string
  */
-const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+const themify = (str: string) => {
+  return (str.charAt(0).toUpperCase() + str.slice(1)).replace('-', ' ');
 };
 const Navbar: React.FC = () => {
   const { theme, setTheme, themes } = useTheme();
@@ -24,14 +24,14 @@ const Navbar: React.FC = () => {
         <Select value={theme} onValueChange={setTheme}>
           <SelectTrigger className="h-8 w-[100px]">
             <SelectValue
-              placeholder={theme ? capitalize(theme) : undefined}
+              placeholder={theme ? themify(theme) : undefined}
               className="capitalize"
             />
           </SelectTrigger>
           <SelectContent>
             {themes.map((theme) => (
               <SelectItem key={theme} value={theme} className="capitalize">
-                {capitalize(theme)}
+                {themify(theme)}
               </SelectItem>
             ))}
           </SelectContent>
