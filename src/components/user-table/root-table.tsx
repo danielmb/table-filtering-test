@@ -1,6 +1,5 @@
 import React from 'react';
 import { getUsers } from './server';
-import CreateUserButton from './components/create-user-button';
 // import SetRandomSalaryButton from './components/set-salary';
 // import {
 //   Table,
@@ -14,7 +13,6 @@ import CreateUserButton from './components/create-user-button';
 // } from '@/components/ui/table';
 import { Filter, validateFilters } from '@/lib/filters';
 import { getUsersSchema } from './get-users-schema';
-import { ToolbarServerWrapper } from '../table/toolbar-server-wrapper';
 import UserTable from './data-table';
 interface UsersTableProps {
   filters: Filter[];

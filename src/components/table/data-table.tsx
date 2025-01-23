@@ -24,7 +24,7 @@ export function DataTable<TData>({ table }: DataTableProps<TData>) {
     <div className="w-full space-y-2.5">
       <div className="relative rounded-md border overflow-x-auto">
         <Table className="w-full table-fixed">
-          <TableHeader className="bg-gray-50">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
