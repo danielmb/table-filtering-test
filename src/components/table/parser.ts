@@ -36,7 +36,6 @@ export const parseFilters = (schema: FieldSchema) =>
             field: f.field,
             operator: f.operator,
             value: f.value,
-            schema: schemaKey,
             disabled: f.disabled,
           } satisfies FilterFieldProps;
         })
