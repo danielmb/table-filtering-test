@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export type Operator =
   | 'contains'
   | '>'
@@ -175,15 +177,6 @@ export const getDefaultOperators = (type: string): Operator[] => {
 };
 
 export const validateFilters = (filters: Filter[], schema: FieldSchema) => {
-  // return filters.every((filter) => {
-  //   // check if its in the schema
-  //   const fieldSchema = schema[filter.field];
-  //   if (!fieldSchema) {
-  //     return false;
-  //   }
-
-  //   return fieldSchema.allowedOperators.includes(filter.operator);
-  // });
   for (const filter of filters) {
     const fieldSchema = schema[filter.field];
     if (!fieldSchema) {
@@ -220,4 +213,41 @@ export const validateFilters = (filters: Filter[], schema: FieldSchema) => {
       );
     }
   }
+};
+
+export interface SortKey<T> {
+  ascending: T;
+  descending: T;
+}
+
+export type SortKeyMap<T> = Record<string, SortKey<T>>;
+
+// interface Sort {
+//   orderBy: string | null;
+//   direction: 'ascending' | 'descending' | null;
+// }
+export const SortSchema = z.object({
+  orderBy: z.string().nullable(),
+  direction: z
+    .union([z.literal('ascending'), z.literal('descending')])
+    .nullable(),
+});
+
+export type Sort = z.infer<typeof SortSchema>;
+
+export const getSort = <T>(sort?: Sort | null, sortKeyMap?: SortKeyMap<T>) => {
+  if (!sort) {
+    return undefined;
+  }
+  if (!sortKeyMap) {
+    return undefined;
+  }
+  if (!sort.orderBy || !sort.direction) {
+    return undefined;
+  }
+  const sortKey = sortKeyMap[sort.orderBy];
+  if (!sortKey) {
+    return undefined;
+  }
+  return sortKey[sort.direction];
 };

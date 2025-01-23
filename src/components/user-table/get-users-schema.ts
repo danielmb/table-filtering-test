@@ -1,5 +1,5 @@
-import { FieldSchema } from '@/lib/filters';
-
+import { FieldSchema, SortKeyMap } from '@/lib/filters';
+import { Prisma } from '@prisma/client';
 export const getUsersSchema = {
   id: {
     type: 'string',
@@ -26,3 +26,30 @@ export const getUsersSchema = {
     label: 'Updated At',
   },
 } satisfies FieldSchema;
+
+export const gUsersSortSchema = {
+  id: {
+    ascending: { id: 'asc' },
+    descending: { id: 'desc' },
+  },
+  name: {
+    ascending: { name: 'asc' },
+    descending: { name: 'desc' },
+  },
+  salary: {
+    ascending: { salary: 'asc' },
+    descending: { salary: 'desc' },
+  },
+  email: {
+    ascending: { email: 'asc' },
+    descending: { email: 'desc' },
+  },
+  createdAt: {
+    ascending: { createdAt: 'asc' },
+    descending: { createdAt: 'desc' },
+  },
+  updatedAt: {
+    ascending: { updatedAt: 'asc' },
+    descending: { updatedAt: 'desc' },
+  },
+} as const satisfies SortKeyMap<Prisma.UserFindManyArgs['orderBy']>;

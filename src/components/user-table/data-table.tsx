@@ -6,6 +6,7 @@ import { getUsers } from './server';
 import {
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   PaginationState,
   useReactTable,
 } from '@tanstack/react-table';
@@ -38,6 +39,7 @@ const UserTable: React.FC<UserTableProps> = ({ data }) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    getSortedRowModel: getSortedRowModel(),
   });
   return (
     <>
