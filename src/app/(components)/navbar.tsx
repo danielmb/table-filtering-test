@@ -19,8 +19,8 @@ const themify = (str: string) => {
 const Navbar: React.FC = () => {
   const { theme, setTheme, themes } = useTheme();
   return (
-    <div className="bg-gray-200 text-white px-6 py-0 dark:bg-gray-600">
-      <div className="flex justify-between items-center  dark:bg-gray-900 bg-gray-800 px-5 py-4 ">
+    <div className="px-6 py-0 ">
+      <div className="flex justify-between items-center  px-5 py-4 ">
         <Select value={theme} onValueChange={setTheme}>
           <SelectTrigger className="h-8 w-[100px]">
             <SelectValue

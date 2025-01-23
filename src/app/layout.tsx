@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const now = new Date();
-  const themes = ['light', 'dark', 'high-contrast', 'dracula'];
+  const themes = ['light', 'dark', 'high-contrast', 'dracula', 'radical'];
   const isHalloween = now.getMonth() === 9 && now.getDate() === 31;
   if (isHalloween) {
     themes.push('halloween');

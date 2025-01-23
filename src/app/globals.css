@@ -165,6 +165,33 @@ body {
     --chart-4: 0 100% 67%; /* Red */
     --chart-5: 32 97% 56%; /* Orange */
   }
+
+  .radical {
+    --background: 0 0% 10%; /* Deep black */
+    --foreground: 0 0% 100%; /* Pure white */
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 350 100% 66%; /* Intense neon pink */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 190 100% 57%; /* Bright electric blue */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 120 100% 50%; /* Vibrant green */
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 100% 50%; /* Blazing red */
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 30%;
+    --input: 0 0% 30%;
+    --ring: 350 100% 66%;
+    --chart-1: 350 100% 66%; /* Neon pink */
+    --chart-2: 190 100% 57%; /* Electric blue */
+    --chart-3: 270 100% 65%; /* Vivid purple */
+    --chart-4: 120 100% 50%; /* Bright green */
+    --chart-5: 30 100% 50%; /* Intense orange */
+  }
 }
 
 @layer base {
