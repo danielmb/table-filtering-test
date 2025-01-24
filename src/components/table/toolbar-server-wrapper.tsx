@@ -7,6 +7,7 @@ import { useQueryState } from 'nuqs';
 import { revalidatePathClient } from '@/lib/revalidate-client';
 import { parseFilters } from './parser';
 import { FilterFieldProps } from './types';
+import { useDebounce } from '@uidotdev/usehooks';
 
 interface ToolbarServerWrapperProps {
   schema: ToolbarProps['schema'];
@@ -20,6 +21,7 @@ export const ToolbarServerWrapper: React.FC<ToolbarServerWrapperProps> = ({
     'filters',
     parseFilters(schema).withDefault([]),
   );
+  const debouncedFilters = useDebounce(filters, 500);
   const pathname = usePathname();
 
   const onFilterChange = async (filters: FilterFieldProps[]) => {
@@ -31,7 +33,7 @@ export const ToolbarServerWrapper: React.FC<ToolbarServerWrapperProps> = ({
     <Toolbar
       schema={schema}
       onFilterChange={onFilterChange}
-      defaultFilters={filters}
+      defaultFilters={debouncedFilters}
     />
   );
 };
