@@ -6,7 +6,7 @@ export const POST = async (req: NextRequest) => {
 
   if (!secret)
     return NextResponse.json(
-      { error: 'No webhook secret provided' },
+      { error: 'The server is not configured with a webhook secret' },
       { status: 500 },
     );
 
