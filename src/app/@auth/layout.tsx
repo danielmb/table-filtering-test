@@ -2,9 +2,7 @@ import React from 'react';
 import ModalRouteWrapper from '@/components/modal-route';
 import { DialogTitle } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import Link from 'next/link';
 import { AuthLink } from './(components)/auth-tab';
-import { UserButton } from '@clerk/nextjs';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
