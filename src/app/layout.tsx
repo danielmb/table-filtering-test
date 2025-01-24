@@ -4,7 +4,7 @@ import './globals.css';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ThemeProvider } from './theme-provider';
 import Navbar from './(components)/navbar';
-
+import { ClerkProvider } from '@clerk/nextjs';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -22,8 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
   const now = new Date();
   const themes = ['light', 'dark', 'high-contrast', 'dracula', 'radical'];
@@ -32,24 +34,27 @@ export default function RootLayout({
     themes.push('halloween');
   }
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          themes={themes}
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="theme"
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <NuqsAdapter>
-            <Navbar />
-            {children}
-          </NuqsAdapter>
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            themes={themes}
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="theme"
+          >
+            <NuqsAdapter>
+              <Navbar />
+              {children}
+              {auth}
+            </NuqsAdapter>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
