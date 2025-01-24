@@ -1,10 +1,13 @@
 import React from 'react';
-import { OrganizationSwitcher } from '@clerk/nextjs';
+import { SignedIn, UserProfile } from '@clerk/nextjs';
 const ProfilePage: React.FC = async () => {
   return (
     <div>
       {/* {user.orgPermissions} */}
-      <OrganizationSwitcher />
+      <SignedIn>
+        {/* <OrganizationSwitcher /> */}
+        <UserProfile routing="hash" />
+      </SignedIn>
     </div>
   );
 };
