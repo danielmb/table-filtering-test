@@ -41,6 +41,7 @@ const UserTable: React.FC<UserTableProps> = ({ data }) => {
     onPaginationChange: setPagination,
     getSortedRowModel: getSortedRowModel(),
   });
+
   return (
     <>
       <DataTable table={table} />

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { setRandomSalary } from '../server';
+import { Button } from '@/components/ui/button';
 
 interface SetRandomSalaryButtonProps {
   id: string;
@@ -12,7 +13,7 @@ const SetRandomSalaryButton: React.FC<SetRandomSalaryButtonProps> = ({
   const handleClick = async () => {
     await setRandomSalary(id);
   };
-  return <button onClick={handleClick}>Set Random Salary</button>;
+  return <Button onClick={handleClick}>Set Random Salary</Button>;
 };
 
 export default SetRandomSalaryButton;

@@ -9,6 +9,7 @@ import { MobileMenuToggle } from './navbar-mobile-menu-toggle';
 import ThemeSelect from './theme-select';
 import { NavLink } from './navlink';
 import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
+import NavbarUser from './navbar-user';
 interface Page {
   title: string;
   href: string;
@@ -16,6 +17,7 @@ interface Page {
 const pages = [
   { title: 'Home', href: '/' },
   { title: 'Users', href: '/users' },
+  { title: 'Profile', href: '/profile' },
 ] satisfies Page[];
 
 const Navbar = async () => {
@@ -58,6 +60,7 @@ const Navbar = async () => {
             </SignedOut>
             <SignedIn>
               <SignOutButton />
+              <NavbarUser />
             </SignedIn>
           </div>
 
@@ -75,7 +78,7 @@ const Navbar = async () => {
       {isMobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {/* <Link
+            {/* <LinkF
               href="/"
               className="text-muted-foreground hover:bg-secondary hover:text-foreground block px-3 py-2 rounded-md text-base font-medium"
             >

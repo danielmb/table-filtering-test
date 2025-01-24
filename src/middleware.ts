@@ -1,13 +1,16 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import {
+  clerkMiddleware,
+  // createRouteMatcher
+} from '@clerk/nextjs/server';
 
-const isPublicRoute = createRouteMatcher(['/', '/login', '/register']);
+// const isPublicRoute = createRouteMatcher(['/', '/login', '/register']);
 
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect({
-      unauthorizedUrl: '/login',
-    });
-  }
+export default clerkMiddleware(async () => {
+  // if (!isPublicRoute(request)) {
+  //   await auth.protect({
+  //     unauthorizedUrl: '/login',
+  //   });
+  // }
 });
 
 // Modify matcher to include catch-all for login routes

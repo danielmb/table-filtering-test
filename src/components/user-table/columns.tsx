@@ -3,6 +3,7 @@ import { TData } from './data-table';
 import SetRandomSalaryButton from './components/set-salary';
 import { createSelectColumn } from '../table/table-select-column';
 import { DataTableColumnHeader } from '../table/data-table-column-header';
+import { Protect } from '@clerk/nextjs';
 export const columns = [
   createSelectColumn({ id: 'select' }),
 
@@ -39,7 +40,11 @@ export const columns = [
       <DataTableColumnHeader column={column} title="actions" />
     ),
     cell: ({ row }) => {
-      return <SetRandomSalaryButton id={row.original.id} />;
+      return (
+        <Protect permission="org:user:edit">
+          <SetRandomSalaryButton id={row.original.id} />
+        </Protect>
+      );
     },
   },
 ] as const satisfies ColumnDef<TData>[];
