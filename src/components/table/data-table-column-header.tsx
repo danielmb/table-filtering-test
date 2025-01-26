@@ -70,7 +70,8 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                Stigende
+                {/* Stigende */}
+                Ascending
               </DropdownMenuItem>
               <DropdownMenuItem
                 aria-label="Sorter synkende"
@@ -80,7 +81,8 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                Synkende
+                {/* Synkende */}
+                Descending
               </DropdownMenuItem>
             </>
           )}
@@ -96,7 +98,8 @@ export function DataTableColumnHeader<TData, TValue>({
                 className="mr-2 size-3.5 text-muted-foreground/70"
                 aria-hidden="true"
               />
-              Skjul kolonne
+              {/* Skjul kolonne */}
+              Hide column
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
